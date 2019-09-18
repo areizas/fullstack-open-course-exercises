@@ -11,34 +11,51 @@ const Header = (props) =>{
 
 const Content = (props) =>{
     const contens = [];
-    for(let i = 0; i<props.parts.length; i++){
-        contens.push(<p> {props.parts[i]} {props.exercises[i]}</p>)
-    }
+    props.parts.forEach(part => {
+        contens.push(<p> {part.name} {part.exercises}</p>)
+    });
+
     return(
         <div>
-            <p> {contens} </p>
+            {contens}
         </div>
     )
 };
 
 const Total = (props) =>{
-  return(
+    let totalEx = 0;
+    props.parts.forEach(part => {
+        totalEx+=part.exercises;
+    });
+
+    return(
       <div>
-          <p> {props.message} {props.numberArray.reduce((a,b) => a+b,0)} </p>
+          <p> {props.message} {totalEx} </p>
       </div>
-  )
+    )
 };
 
 const App = () => {
-    const course = 'Half Stack application development';
-    const parts = ['Fundamentals of React','Using props to pass data','State of a component'];
-    const exercises = [10,7,14];
+    const course = 'Half Stack application development'
+    const part1 = {
+        name: 'Fundamentals of React',
+        exercises: 10
+    };
+    const part2 = {
+        name: 'Using props to pass data',
+        exercises: 7
+    };
+    const part3 = {
+        name: 'State of a component',
+        exercises: 14
+    };
+    const parts=[part1,part2,part3];
 
     return (
         <div>
             <Header course={course} />
-            <Content parts={parts} exercises={exercises}/>
-            <Total message="Number of exercises" numberArray={exercises}/>
+            <Content parts={parts}/>
+            <Total message="Number of exercises" parts={parts}/>
         </div>
     )
 };
