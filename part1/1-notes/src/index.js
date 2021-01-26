@@ -9,15 +9,24 @@ const Hello = (props) => {
     )
 }
 
+const Footer = () => {
+    return (
+        <div>
+            greeting app created by <a href="https://github.com/areizas">areizas</a>
+        </div>
+    )
+}
+
 const App = () => {
     const name = "Camila"
     const age = 22
     return (
-        <div>
+        <>
             <h1>Greetings</h1>
             <Hello name="Mat" age={24}/>
             <Hello name={name} age={age}/>
-        </div>
+            <Footer />
+        </>
     )
 }
 
