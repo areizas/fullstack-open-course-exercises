@@ -1,35 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Hello = ({name,age}) => {
-    const bornYear = () => new Date().getFullYear()  - age
-    return (
-        <div>
-            <p> Hello {name}, you are {age} years old.</p>
-            <p> So you were probably born in {bornYear()}</p>
-        </div>
-    )
-}
-
-const Footer = () => {
-    return (
-        <div>
-            greeting app created by <a href="https://github.com/areizas">areizas</a>
-        </div>
-    )
-}
-
-const App = () => {
-    const name = "Camila"
-    const age = 22
+const App = (props) => {
+    const {counter} = props
     return (
         <>
-            <h1>Greetings</h1>
-            <Hello name="Mat" age={24}/>
-            <Hello name={name} age={age}/>
-            <Footer />
+            <p>{counter}</p>
         </>
     )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+let counter = 1
+
+const refresh = () => {
+    ReactDOM.render(<App counter={counter} />, document.getElementById('root'))
+}
+
+setInterval(()=>{
+    refresh()
+    counter += 1
+}, 1000)
