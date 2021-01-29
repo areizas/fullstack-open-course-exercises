@@ -12,6 +12,8 @@ const History = ({allClicks}) => {
     )
 }
 
+const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
+
 const App = () => {
 
     const [clicks, setClicks] = useState({
@@ -34,9 +36,9 @@ const App = () => {
     return (
         <>
             <div>{clicks.left}</div>
-            <button onClick={handleLeftClick}>left</button>
+            <Button handleClick={handleLeftClick} text={'left'}/>
             <div>{clicks.right}</div>
-            <button onClick={handleRightClick}>right</button>
+            <Button handleClick={handleRightClick} text={'right'}/>
             <History allClicks={allClicks}/>
         </>
     )
