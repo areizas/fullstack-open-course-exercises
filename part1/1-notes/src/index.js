@@ -1,6 +1,16 @@
 import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 
+const History = ({allClicks}) => {
+    if(allClicks.length === 0){
+        return (
+            <p>You should click on left or right buttons</p>
+        )
+    }
+    return (
+        <p>button press history: {allClicks.join(' ')} </p>
+    )
+}
 
 const App = () => {
 
@@ -27,7 +37,7 @@ const App = () => {
             <button onClick={handleLeftClick}>left</button>
             <div>{clicks.right}</div>
             <button onClick={handleRightClick}>right</button>
-            <p>{allClicks.join(' ')}</p>
+            <History allClicks={allClicks}/>
         </>
     )
 }
