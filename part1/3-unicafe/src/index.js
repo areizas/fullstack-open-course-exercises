@@ -5,8 +5,8 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
-const Display = ({feedbacks}) => {
-    const showFeedbacks = () => feedbacks.map((feedback) => <p key={feedback.name}>{feedback.name} {feedback.value}</p>)
+const Display = ({statistics}) => {
+    const showFeedbacks = () => statistics.map((statistic) => <p key={statistic.name}>{statistic.name} {statistic.value}</p>)
     return(
         <>
             {showFeedbacks()}
@@ -23,7 +23,7 @@ const App = () => {
     const increaseNeutral = () => setNeutral(neutral+1)
     const increaseBad = () => setBad(bad+1)
 
-    const feedbacks = [
+    const statistics = [
         {
             name: 'good',
             value: good
@@ -35,6 +35,18 @@ const App = () => {
         {
             name: 'bad',
             value: bad
+        },
+        {
+            name: 'all',
+            value: good+neutral+bad
+        },
+        {
+            name: 'average',
+            value: (good-bad)/(good+neutral+bad)
+        },
+        {
+            name: 'positive',
+            value: (good)/(good+neutral+bad)
         }
     ]
 
@@ -45,7 +57,7 @@ const App = () => {
             <Button text={"neutral"} handleClick={increaseNeutral}/>
             <Button text={"bad"} handleClick={increaseBad}/>
             <Title text={"statistics"}/>
-            <Display feedbacks={feedbacks}/>
+            <Display statistics={statistics}/>
 
         </>
     )
