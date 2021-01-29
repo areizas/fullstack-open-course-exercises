@@ -4,30 +4,20 @@ import ReactDOM from 'react-dom'
 
 const App = () => {
 
-    const [state, setState] = useState({
+    const [clicks, setClicks] = useState({
         right: 0,
         left: 0
     })
 
-    const handleLeftClick = () => {
-        setState ({
-            left: state.left+1,
-            right: state.right
-        })
-    }
+    const handleLeftClick = () => setClicks({...clicks, left: clicks.left+=1})
 
-    const  handleRightClick = () => {
-        setState( {
-            left: state.left,
-            right: state.right + 1
-        })
-    }
+    const  handleRightClick = () => setClicks({...clicks, right: clicks.right+=1})
 
     return (
         <>
-            <div>{state.left}</div>
+            <div>{clicks.left}</div>
             <button onClick={handleLeftClick}>left</button>
-            <div>{state.right}</div>
+            <div>{clicks.right}</div>
             <button onClick={handleRightClick}>right</button>
         </>
     )
