@@ -9,9 +9,17 @@ const App = () => {
         left: 0
     })
 
-    const handleLeftClick = () => setClicks({...clicks, left: clicks.left+=1})
+    const [allClicks, setAllClicks] = useState([])
 
-    const  handleRightClick = () => setClicks({...clicks, right: clicks.right+=1})
+    const handleLeftClick = () => {
+        setClicks({...clicks, left: clicks.left+=1})
+        setAllClicks(allClicks.concat('L'))
+    }
+
+    const  handleRightClick = () => {
+        setClicks({...clicks, right: clicks.right+=1})
+        setAllClicks(allClicks.concat('R'))
+    }
 
     return (
         <>
@@ -19,6 +27,7 @@ const App = () => {
             <button onClick={handleLeftClick}>left</button>
             <div>{clicks.right}</div>
             <button onClick={handleRightClick}>right</button>
+            <p>{allClicks.join(' ')}</p>
         </>
     )
 }
