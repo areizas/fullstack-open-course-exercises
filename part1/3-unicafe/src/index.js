@@ -5,7 +5,7 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
-const Display = ({statistics}) => {
+const Statistics = ({statistics}) => {
     const showFeedbacks = () => statistics.map((statistic) => <p key={statistic.name}>{statistic.name} {statistic.value}</p>)
     return(
         <>
@@ -57,7 +57,7 @@ const App = () => {
             <Button text={"neutral"} handleClick={increaseNeutral}/>
             <Button text={"bad"} handleClick={increaseBad}/>
             <Title text={"statistics"}/>
-            <Display statistics={statistics}/>
+            <Statistics statistics={statistics}/>
 
         </>
     )
