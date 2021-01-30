@@ -5,18 +5,21 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
+const Statistic = ({text, value}) => <p>{text} {value}</p>
+
 const Statistics = ({statistics}) => {
     const all = statistics.reduce( (a,b) => a + b.value , 0)
-    if(statistics.reduce( (a,b) => a + b.value , 0) === 0){
+    if(all === 0){
         return (<p>No feedback given</p>)
     }
-    const showFeedbacks = () => statistics.map((statistic) => <p key={statistic.name}>{statistic.name} {statistic.value}</p>)
     return(
         <>
-            {showFeedbacks()}
-            <p>all {all}</p>
-            <p>average {(statistics[0].value-statistics[2].value)/all}</p>
-            <p>positive {statistics[0].value/all}</p>
+            <Statistic text={statistics[0].name} value={statistics[0].value} />
+            <Statistic text={statistics[1].name} value={statistics[1].value} />
+            <Statistic text={statistics[2].name} value={statistics[2].value} />
+            <Statistic text="all" value={statistics[2].value} />
+            <Statistic text="average" value={(statistics[0].value-statistics[2].value)/all} />
+            <Statistic text="positive" value={statistics[0].value/all} />
         </>
     )
 }
