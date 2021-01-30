@@ -3,9 +3,20 @@ import ReactDOM from 'react-dom'
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
+const BestAnecdote = ({anecdote, vote}) => {
+    return(
+        <div>
+            <h1>Anecdote with most votes</h1>
+            <div>{anecdote}</div>
+            <div>It has {vote} votes</div>
+        </div>
+    )
+}
+
 const App = ({anecdotes}) => {
     const [selected, setSelected] = useState(0)
     const [votes, setVotes]  = useState(new Array(anecdotes.length).fill( 0))
+    const [maxVotedIndex, setMaxVotedIndex] = useState(0)
 
     const handleSelectNext = () => setSelected(Math.random()*anecdotes.length | 0)
 
@@ -13,14 +24,29 @@ const App = ({anecdotes}) => {
         const copy = [...votes]
         copy[selected]+=1
         setVotes(copy)
+
+        const getMax = (votes) => {
+            let max = 0
+            let maxIndex = 0
+            votes.forEach( (el,index) => {
+                if(el>max){
+                    max = el
+                    maxIndex = index
+                }
+            })
+            return maxIndex
+        }
+        setMaxVotedIndex(getMax(copy))
     }
 
     return (
         <>
+            <h1>Anecdote of the day</h1>
             <div>{anecdotes[selected]}</div>
             <div>Has {votes[selected]} votes</div>
             <Button handleClick={handleVote} text="vote"/>
             <Button handleClick={handleSelectNext} text="next anecdote"/>
+            <BestAnecdote anecdote={anecdotes[maxVotedIndex]} vote={votes[maxVotedIndex]}/>
         </>
     )
 }
