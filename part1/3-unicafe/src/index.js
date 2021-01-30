@@ -6,10 +6,17 @@ const Title = ({text}) => <h1>{text}</h1>
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
 const Statistics = ({statistics}) => {
+    const all = statistics.reduce( (a,b) => a + b.value , 0)
+    if(statistics.reduce( (a,b) => a + b.value , 0) === 0){
+        return (<p>No feedback given</p>)
+    }
     const showFeedbacks = () => statistics.map((statistic) => <p key={statistic.name}>{statistic.name} {statistic.value}</p>)
     return(
         <>
             {showFeedbacks()}
+            <p>all {all}</p>
+            <p>average {(statistics[0].value-statistics[2].value)/all}</p>
+            <p>positive {statistics[0].value/all}</p>
         </>
     )
 }
@@ -35,18 +42,6 @@ const App = () => {
         {
             name: 'bad',
             value: bad
-        },
-        {
-            name: 'all',
-            value: good+neutral+bad
-        },
-        {
-            name: 'average',
-            value: (good-bad)/(good+neutral+bad)
-        },
-        {
-            name: 'positive',
-            value: (good)/(good+neutral+bad)
         }
     ]
 
