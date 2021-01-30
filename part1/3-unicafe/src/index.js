@@ -5,7 +5,16 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
-const Statistic = ({text, value}) => <p>{text} {value}</p>
+const Statistic = ({text, value}) => {
+    return(
+        <thead>
+            <tr>
+                <th align='left'>{text}</th>
+                <th align='left'>{value}</th>
+            </tr>
+        </thead>
+    )
+}
 
 const Statistics = ({statistics}) => {
     const all = statistics.reduce( (a,b) => a + b.value , 0)
@@ -14,12 +23,14 @@ const Statistics = ({statistics}) => {
     }
     return(
         <>
-            <Statistic text={statistics[0].name} value={statistics[0].value} />
-            <Statistic text={statistics[1].name} value={statistics[1].value} />
-            <Statistic text={statistics[2].name} value={statistics[2].value} />
-            <Statistic text="all" value={statistics[2].value} />
-            <Statistic text="average" value={(statistics[0].value-statistics[2].value)/all} />
-            <Statistic text="positive" value={statistics[0].value/all} />
+            <table>
+                <Statistic text={statistics[0].name} value={statistics[0].value} />
+                <Statistic text={statistics[1].name} value={statistics[1].value} />
+                <Statistic text={statistics[2].name} value={statistics[2].value} />
+                <Statistic text="all" value={statistics[2].value} />
+                <Statistic text="average" value={(statistics[0].value-statistics[2].value)/all} />
+                <Statistic text="positive" value={statistics[0].value/all} />
+            </table>
         </>
     )
 }
