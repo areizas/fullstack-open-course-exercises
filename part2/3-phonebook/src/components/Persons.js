@@ -1,7 +1,7 @@
 import React from "react";
 import Person from "./Person";
 
-const Numbers = ({persons}) => {
+const Persons = ({persons}) => {
     return (
         <div>
             <h2>Numbers</h2>
@@ -18,4 +18,4 @@ const Numbers = ({persons}) => {
     )
 }
 
-export default Numbers
+export default Persons

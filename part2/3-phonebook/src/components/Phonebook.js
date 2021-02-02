@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Numbers from "./Numbers";
-import AddPersonForm from "./AddPersonForm";
+import Persons from "./Persons";
+import PersonForm from "./PersonForm";
 
 const PhoneBook = ({initialPersons}) => {
 
@@ -18,8 +18,9 @@ const PhoneBook = ({initialPersons}) => {
             <div>
                 filter shown with <input value={filter} onChange={handleOnChangeFilter}/>
             </div>
-            <AddPersonForm persons={persons} setPersons={setPersons}/>
-            <Numbers persons={personToShow}/>
+            <h3>Add a new person</h3>
+            <PersonForm persons={persons} setPersons={setPersons}/>
+            <Persons persons={personToShow}/>
         </div>
     )
 }
