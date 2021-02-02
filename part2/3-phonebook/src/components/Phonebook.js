@@ -1,54 +1,25 @@
 import React, {useState} from "react";
 import Numbers from "./Numbers";
+import AddPersonForm from "./AddPersonForm";
 
 const PhoneBook = ({initialPersons}) => {
 
     const [persons, setPersons] = useState(initialPersons.length>0 ? initialPersons : [])
-    const [newName, setNewName] = useState('')
-    const [newNumber, setNewNumber] = useState('')
+    const [filter, setFilter] = useState('')
 
-    const handleOnChangeNewName = (event) => {
-        setNewName(event.target.value)
-    }
-    const handleOnChangeNewNumber = (event) => {
-        setNewNumber(event.target.value)
-    }
-
-    const addNewPerson = (event) => {
-        event.preventDefault()
-        if (persons.some( (person) => person.name === newName)){
-            alert(newName + " is already added to phonebook")
-        } else{
-            const personObject = {
-                name: newName, number: newNumber
-            }
-            setPersons(persons.concat(personObject))
-            setNewName('')
-            setNewNumber('')
-        }
-    }
+    const handleOnChangeFilter = (event) => setFilter(event.target.value)
+    const personToShow = filter.length>0
+        ? persons.filter(person => person.name.includes(filter))
+        : persons
 
     return (
         <div>
             <h2>Phonebook</h2>
-            <form onSubmit={addNewPerson}>
-                <div>
-                    Name: <input
-                    value={newName}
-                    onChange={handleOnChangeNewName}
-                    />
-                </div>
-                <div>
-                    Number: <input
-                    value={newNumber}
-                    onChange={handleOnChangeNewNumber}
-                />
-                </div>
-                <div>
-                    <button type="submit" >add</button>
-                </div>
-            </form>
-            <Numbers persons={persons}/>
+            <div>
+                filter shown with <input value={filter} onChange={handleOnChangeFilter}/>
+            </div>
+            <AddPersonForm persons={persons} setPersons={setPersons}/>
+            <Numbers persons={personToShow}/>
         </div>
     )
 }

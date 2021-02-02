@@ -12,7 +12,7 @@ const Numbers = ({persons}) => {
                         <th align='left'>Number</th>
                     </tr>
                 </thead>
-                {persons.map( person => <Person person={person}/>)}
+                {persons.map( person => <Person key={person.name} person={person}/>)}
             </table>
         </div>
     )
