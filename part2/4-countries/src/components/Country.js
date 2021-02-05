@@ -1,28 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
+import CountryInformation from "./CountryInformation";
 
-const Country = ({props}) => {
+const Country = ({country}) => {
 
-    const country = props[0]
+    const [hidden, setHidden] = useState(true)
+
+    const handleOnClick = () => setHidden(!hidden)
 
     return (
-        <>
-            <h1>{country.name}</h1>
-            <div>
-                <p><b>Capital:</b> {country.capital}</p>
-                <p><b>Population:</b> {country.population}</p>
+        <div>
+            <b>{country.name}  </b>
+            <button onClick={handleOnClick}>show</button>
+            <div hidden={hidden}>
+                <CountryInformation country={country}/>
             </div>
-            <div>
-                <h2>Languages</h2>
-                <ul>
-                    {country.languages.map( language => (
-                        <li key={language.name}>{language.name}</li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <img key={country.name} src={country.flag} width="150" height="150"></img>
-            </div>
-        </>
+        </div>
     )
 }
 
