@@ -1,7 +1,7 @@
 import React from 'react'
+import Weather from "./Weather";
 
 const CountryInformation = ({country}) => {
-
     return (
         <>
             <h1>{country.name}</h1>
@@ -20,6 +20,7 @@ const CountryInformation = ({country}) => {
             <div>
                 <img key={country.name} src={country.flag} width="150" height="150"></img>
             </div>
+            <Weather country={country}/>
         </>
     )
 }
