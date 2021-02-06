@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import personsService from '../services/persons'
+import Notification from "./Notification";
 
 const PersonForm = ({persons, setPersons}) => {
 
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
+    const [addPersonMessage, setAddPersonMessage] = useState(null)
 
     const handleOnChangeNewName = (event) => {
         setNewName(event.target.value)
@@ -40,27 +42,32 @@ const PersonForm = ({persons, setPersons}) => {
                     setPersons(persons.concat(returnedPerson))
                     setNewName('')
                     setNewNumber('')
+                    setAddPersonMessage(`Added ${returnedPerson.name}`)
+                    setTimeout(()=>setAddPersonMessage(null),5000)
                 })
         }
     }
     return (
-        <form onSubmit={addNewPerson}>
-            <div>
-                Name: <input
-                value={newName}
-                onChange={handleOnChangeNewName}
-            />
-            </div>
-            <div>
-                Number: <input
-                value={newNumber}
-                onChange={handleOnChangeNewNumber}
-            />
-            </div>
-            <div>
-                <button type="submit" >add</button>
-            </div>
-        </form>
+        <div>
+            <Notification message={addPersonMessage} notificationClass='addNewPerson'/>
+            <form onSubmit={addNewPerson}>
+                <div>
+                    Name: <input
+                    value={newName}
+                    onChange={handleOnChangeNewName}
+                />
+                </div>
+                <div>
+                    Number: <input
+                    value={newNumber}
+                    onChange={handleOnChangeNewNumber}
+                />
+                </div>
+                <div>
+                    <button type="submit" >add</button>
+                </div>
+            </form>
+        </div>
     )
 }
 
