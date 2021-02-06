@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import personsService from '../services/persons'
 
 const PersonForm = ({persons, setPersons}) => {
 
@@ -20,9 +21,14 @@ const PersonForm = ({persons, setPersons}) => {
             const personObject = {
                 name: newName, number: newNumber
             }
-            setPersons(persons.concat(personObject))
-            setNewName('')
-            setNewNumber('')
+
+            personsService
+                .create(personObject)
+                .then( returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
     }
     return (
