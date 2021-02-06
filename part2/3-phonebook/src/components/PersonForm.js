@@ -7,6 +7,7 @@ const PersonForm = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [addPersonMessage, setAddPersonMessage] = useState(null)
+    const [notificationClass, setNotificationClass] = useState('addNewPerson')
 
     const handleOnChangeNewName = (event) => {
         setNewName(event.target.value)
@@ -30,6 +31,11 @@ const PersonForm = ({persons, setPersons}) => {
                         setNewName('')
                         setNewNumber('')
                     })
+                    .catch(returnedPerson => {
+                        setNotificationClass('error')
+                        setAddPersonMessage(`Information of ${existingPerson.name} has already been removed from server`)
+                        setTimeout(()=>setAddPersonMessage(null),5000)
+                    })
             }
         } else{
             const personObject = {
@@ -42,6 +48,7 @@ const PersonForm = ({persons, setPersons}) => {
                     setPersons(persons.concat(returnedPerson))
                     setNewName('')
                     setNewNumber('')
+                    setNotificationClass('addNewPerson')
                     setAddPersonMessage(`Added ${returnedPerson.name}`)
                     setTimeout(()=>setAddPersonMessage(null),5000)
                 })
@@ -49,7 +56,7 @@ const PersonForm = ({persons, setPersons}) => {
     }
     return (
         <div>
-            <Notification message={addPersonMessage} notificationClass='addNewPerson'/>
+            <Notification message={addPersonMessage} notificationClass={notificationClass}/>
             <form onSubmit={addNewPerson}>
                 <div>
                     Name: <input
