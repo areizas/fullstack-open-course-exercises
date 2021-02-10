@@ -7,6 +7,7 @@ morgan.token('body', function getBody (req) {
     return JSON.stringify(req.body)
 })
 
+app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
@@ -92,5 +93,6 @@ app.get('/info',(request, response)=>{
 const PORT = 3001
 
 app.listen(PORT,() => {
-    console.log(`App is runing on port ${PORT}`)
+    console.log(`App is running on port ${PORT}`)
+    console.log(`http://localhost:${PORT}`)
 })

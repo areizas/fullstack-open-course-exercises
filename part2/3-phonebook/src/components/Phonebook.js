@@ -10,11 +10,10 @@ const PhoneBook = () => {
     const [filter, setFilter] = useState('')
 
     useEffect(() => {
-        axios
-            .get("http://localhost:3001/persons")
-            .then( response => {
-                const data = response.data
-                setPersons(data)
+        personsService
+            .getAll()
+            .then( returnedData => {
+                setPersons(returnedData)
             })
     },[])
 
