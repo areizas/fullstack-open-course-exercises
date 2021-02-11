@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const mongooseConnect = () => {
     const password = process.argv[2]
-    const url = `mongodb+srv://fullstack:${password}@cluster0.lg40a.mongodb.net/phonebook-app?retryWrites=true`
+    const url = `mongodb+srv://fullstack2:${password}@cluster0.lg40a.mongodb.net/phonebook-app?retryWrites=true`
     mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 }
 
