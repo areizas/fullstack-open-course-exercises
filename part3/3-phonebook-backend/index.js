@@ -101,13 +101,18 @@ app.put('/api/persons/:id',(request, respose, next) => {
 
 })
 
-app.get('/info',(request, response)=>{
-    response.send(`
-        <div>
-            <p>Phonebook has info for ${persons.length} people</p>
-            <p>${new Date()}</p>
-        </div>   
-    `)
+app.get('/info',(request, response, next)=>{
+
+    Person.find({})
+        .then(persons => {
+            response.send(`
+                <div>
+                    <p>Phonebook has info for ${persons.length} people</p>
+                    <p>${new Date()}</p>
+                </div>   
+            `)
+        })
+        .catch( error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
