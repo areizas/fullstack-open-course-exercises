@@ -85,6 +85,22 @@ app.post('/api/persons',(request,response,next)=>{
         })
 })
 
+app.put('/api/persons/:id',(request, respose, next) => {
+    const body = request.body
+
+    const person = {
+        name: body.name,
+        number: body.number
+    }
+
+    Person.findByIdAndUpdate(request.params.id,person,{new: true})
+        .then( updatedPerson => {
+            respose.json(updatedPerson)
+        })
+        .catch(error => next(error))
+
+})
+
 app.get('/info',(request, response)=>{
     response.send(`
         <div>
@@ -104,7 +120,7 @@ const errorHandler = (error, request, response, next) => {
     next(error)
 }
 
-app.use(errorHandler)
+// app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 
