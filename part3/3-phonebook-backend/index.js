@@ -55,10 +55,6 @@ const generateRandomId = () => Math.floor(Math.random()*10000)
 app.post('/api/persons',(request,response,next)=>{
     const body = request.body
 
-    if(!(body.name && body.number)){
-        return response.status(400).json({"error":"Name of Number missing"})
-    }
-
     const person = new Person({
         name: body.name,
         number: body.number,
@@ -105,7 +101,6 @@ app.get('/info',(request, response, next)=>{
 })
 
 const errorHandler = (error, request, response, next) => {
-    console.log(error.message)
 
     if(error.name === 'CastError'){
         response.status(400).send({error:"malformed id"})
