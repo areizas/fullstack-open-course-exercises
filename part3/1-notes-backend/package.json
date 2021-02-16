@@ -10,7 +10,9 @@
     "build:ui": "rm -rf ./build && cd ../../part2/1-notes && npm run build --prod && cp -R build ../../part3/1-notes-backend/",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m 'new deployment' && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "Mateo Areiza",
   "license": "MIT",
@@ -21,6 +23,7 @@
     "mongoose": "^5.11.15"
   },
   "devDependencies": {
+    "eslint": "^7.20.0",
     "nodemon": "^2.0.7"
   }
 }

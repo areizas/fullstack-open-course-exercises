@@ -12,14 +12,14 @@ const getPersonModel = () => {
         number: String
     })
 
-    return mongoose.model("Person",schema)
+    return mongoose.model('Person',schema)
 }
 
 if (process.argv.length === 3){
     mongooseConnect()
     const Person = getPersonModel()
 
-    console.log("Phonebook:")
+    console.log('Phonebook:')
 
     Person.find({}).then( result => {
         result.forEach( person => console.log(`${person.name} ${person.number}`))
@@ -37,11 +37,11 @@ if (process.argv.length === 3){
 
     newPerson
         .save()
-        .then( result => {
+        .then( () => {
             console.log(`Added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
             mongoose.connection.close()
         })
 
 } else {
-    console.log("Wrong parameters. please try with correct parameters")
+    console.log('Wrong parameters. please try with correct parameters')
 }

@@ -17,27 +17,6 @@ app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 
-let notes = [
-    {
-        id: 1,
-        content: "HTML is easy",
-        date: "2019-05-30T17:30:31.098Z",
-        important: true
-    },
-    {
-        id: 2,
-        content: "Browser can execute only Javascript",
-        date: "2019-05-30T18:39:34.091Z",
-        important: false
-    },
-    {
-        id: 3,
-        content: "GET and POST are the most important methods of HTTP protocol",
-        date: "2019-05-30T19:20:14.298Z",
-        important: true
-    }
-]
-
 app.get('/api/notes', (request, response) => {
     Note.find({}).then(notes => {
         response.json(notes)
@@ -90,7 +69,7 @@ app.put('/api/notes/:id', (request,response,next) => {
         important: body.important
     }
 
-    Note.findByIdAndUpdate(request.params.id, note, {new: true})
+    Note.findByIdAndUpdate(request.params.id, note, { new: true })
         .then( updatedNote => {
             response.json(updatedNote)
         })
@@ -108,8 +87,8 @@ const errorHandler = (error, request, response, next) => {
 
     if(error.name === 'CastError'){
         return response.status(400).send({ error: 'malformatted id' })
-    } else if (error.name === "ValidationError"){
-        return response.status(400).json({error: error.message})
+    } else if (error.name === 'ValidationError'){
+        return response.status(400).json({ error: error.message })
     }
 
     next(error)
