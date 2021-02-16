@@ -54,20 +54,9 @@ const generateRandomId = () => Math.floor(Math.random()*10000)
 
 app.post('/api/persons',(request,response,next)=>{
     const body = request.body
-    const personExists = () => {
-        return Person.find({})
-            .then(persons => {
-                return persons.some(p => p.name === body.name)
-            })
-            .catch( error => {
-                next(error)
-            })
-    }
 
     if(!(body.name && body.number)){
         return response.status(400).json({"error":"Name of Number missing"})
-    } else if(personExists()){
-        return response.status(400).json({"error":"Name must be unique"})
     }
 
     const person = new Person({
@@ -120,12 +109,14 @@ const errorHandler = (error, request, response, next) => {
 
     if(error.name === 'CastError'){
         response.status(400).send({error:"malformed id"})
+    } else if(error.name === 'ValidationError'){
+        response.status(400).json({error: error.message})
     }
 
     next(error)
 }
 
-// app.use(errorHandler)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 
