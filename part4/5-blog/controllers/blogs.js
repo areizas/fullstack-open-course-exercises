@@ -34,10 +34,10 @@ blogRouter.post('/',(request,response,next) => {
 })
 
 blogRouter.put('/:id',(request,response,next) => {
-    const blog = {...request.body}
+    const blog = { ...request.body }
 
     Blog
-        .findByIdAndUpdate(request.params.id,blog,{new: true})
+        .findByIdAndUpdate(request.params.id,blog,{ new: true })
         .then( updatedBlog => {
             response.json(updatedBlog)
         })
@@ -47,7 +47,7 @@ blogRouter.put('/:id',(request,response,next) => {
 blogRouter.delete('/:id',(request,response,next) => {
     Blog
         .findByIdAndRemove(request.params.id)
-        .then( updatedBlog => {
+        .then( () => {
             response.status(204).end()
         })
         .catch( error => next(error) )
