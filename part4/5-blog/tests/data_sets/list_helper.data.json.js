@@ -37,13 +37,20 @@ const listWithMultipleBlogs = [
         url: 'http://url4.com',
         likes: 1
     },
+    {
+        id: '5',
+        title: 'title 5',
+        author: 'author 3',
+        url: 'http://url5.com',
+        likes: 5
+    },
 ]
 
 const emptyList = []
 
 const countLikesResults = {
     listWithOneBlog: 5,
-    listWithMultipleBlogs: 7,
+    listWithMultipleBlogs: 12,
     emptyList: 0
 }
 
@@ -57,11 +64,11 @@ const mostPopularBlogResults = {
             likes: 5
         },
     listWithMultipleBlogs: {
-        id: '3',
-        title: 'title 3',
+        id: '5',
+        title: 'title 5',
         author: 'author 3',
-        url: 'http://url3.com',
-        likes: 3
+        url: 'http://url5.com',
+        likes: 5
     },
     emptyList: {}
 }
@@ -75,12 +82,26 @@ const mostBlogsResults = {
     listWithMultipleBlogs:
         {
             author: 'author 3',
-            blogs: 2
+            blogs: 3
+        },
+    emptyList: {}
+}
+
+const mostLikesResults = {
+    listWithOneBlog:
+        {
+            author: 'Edsger W. Dijkstra',
+            likes: 5
+        },
+    listWithMultipleBlogs:
+        {
+            author: 'author 3',
+            likes: 9
         },
     emptyList: {}
 }
 
 module.exports = {
     listWithOneBlog, listWithMultipleBlogs, emptyList,
-    countLikesResults, mostPopularBlogResults, mostBlogsResults
+    countLikesResults, mostPopularBlogResults, mostBlogsResults, mostLikesResults
 }

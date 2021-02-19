@@ -38,9 +38,28 @@ const mostBlogs = (blogs) => {
     }
 }
 
+const mostLikes = (blogs) => {
+    if(blogs.length === 0){
+        return {};
+    } else{
+        let authors = blogs.map(blog => blog.author)
+        authors = [... new Set(authors)]
+
+        authors = authors.map(author => (
+            {
+                author: author,
+                likes: blogs.filter( blog => blog.author === author)
+                            .reduce( (likes,blog) => likes + blog.likes ,0)
+            }
+        ))
+        return authors.reduce( (currentAuthor, prevAuthor) => currentAuthor.likes > prevAuthor.likes ? currentAuthor : prevAuthor )
+    }
+}
+
 module.exports = {
     dummy,
     totalLikes,
     getMostPopularBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }

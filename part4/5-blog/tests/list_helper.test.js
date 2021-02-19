@@ -43,17 +43,34 @@ describe('Get the most popular blog', ()=>{
 
 describe('Get the author who has more blogs than any other author', ()=>{
     test('Returns the single blog author when there is only one single blog in the list', ()=>{
-        expect(listHelper.mostBlogs (listHelperDataSet.listWithOneBlog))
+        expect(listHelper.mostBlogs(listHelperDataSet.listWithOneBlog))
             .toEqual(listHelperDataSet.mostBlogsResults.listWithOneBlog)
     })
 
     test('Returns the author with higher amount of blogs when there are multiple blogs on the list', ()=>{
-        expect(listHelper.mostBlogs (listHelperDataSet.listWithMultipleBlogs))
+        expect(listHelper.mostBlogs(listHelperDataSet.listWithMultipleBlogs))
             .toEqual(listHelperDataSet.mostBlogsResults.listWithMultipleBlogs)
     })
 
     test('Returns a void object when a empty list is provide', ()=>{
-        expect(listHelper.mostBlogs (listHelperDataSet.emptyList))
+        expect(listHelper.mostBlogs(listHelperDataSet.emptyList))
             .toEqual(listHelperDataSet.mostBlogsResults.emptyList)
+    })
+})
+
+describe('Get the author who has more likes than any other author', ()=>{
+    test('Returns the single author when there is only one single blog in the list', ()=>{
+        expect(listHelper.mostLikes(listHelperDataSet.listWithOneBlog))
+            .toEqual(listHelperDataSet.mostLikesResults.listWithOneBlog)
+    })
+
+    test('Returns the author with higher amount of likes when there are multiple blogs on the list', ()=>{
+        expect(listHelper.mostLikes(listHelperDataSet.listWithMultipleBlogs))
+            .toEqual(listHelperDataSet.mostLikesResults.listWithMultipleBlogs)
+    })
+
+    test('Returns a void object when a empty list is provide', ()=>{
+        expect(listHelper.mostLikes(listHelperDataSet.emptyList))
+            .toEqual(listHelperDataSet.mostLikesResults.emptyList)
     })
 })
