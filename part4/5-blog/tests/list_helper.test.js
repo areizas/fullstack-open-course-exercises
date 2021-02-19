@@ -40,3 +40,20 @@ describe('Get the most popular blog', ()=>{
             .toEqual(listHelperDataSet.mostPopularBlogResults.emptyList)
     })
 })
+
+describe('Get the author who has more blogs than any other author', ()=>{
+    test('Returns the single blog author when there is only one single blog in the list', ()=>{
+        expect(listHelper.getAuthorWithHigherAmountOfBlogs(listHelperDataSet.listWithOneBlog))
+            .toEqual(listHelperDataSet.authorWithMoreBlogsResults.listWithOneBlog)
+    })
+
+    test('Returns the author with higher amount of blogs when there are multiple blogs on the list', ()=>{
+        expect(listHelper.getAuthorWithHigherAmountOfBlogs(listHelperDataSet.listWithMultipleBlogs))
+            .toEqual(listHelperDataSet.authorWithMoreBlogsResults.listWithMultipleBlogs)
+    })
+
+    test('Returns a void object when a empty list is provide', ()=>{
+        expect(listHelper.getAuthorWithHigherAmountOfBlogs(listHelperDataSet.emptyList))
+            .toEqual(listHelperDataSet.authorWithMoreBlogsResults.emptyList)
+    })
+})
