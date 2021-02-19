@@ -20,7 +20,7 @@ const getMostPopularBlog = (blogs) => {
     }
 }
 
-const getAuthorWithHigherAmountOfBlogs = (blogs) => {
+const mostBlogs = (blogs) => {
     if(blogs.length === 0){
         return {};
     } else{
@@ -42,5 +42,5 @@ module.exports = {
     dummy,
     totalLikes,
     getMostPopularBlog,
-    getAuthorWithHigherAmountOfBlogs
+    mostBlogs
 }
