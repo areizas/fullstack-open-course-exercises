@@ -66,7 +66,7 @@ const mostPopularBlogResults = {
     emptyList: {}
 }
 
-const authorWithMoreBlogsResults = {
+const mostBlogsResults = {
     listWithOneBlog:
         {
             author: 'Edsger W. Dijkstra',
@@ -82,5 +82,5 @@ const authorWithMoreBlogsResults = {
 
 module.exports = {
     listWithOneBlog, listWithMultipleBlogs, emptyList,
-    countLikesResults, mostPopularBlogResults, authorWithMoreBlogsResults
+    countLikesResults, mostPopularBlogResults, mostBlogsResults
 }
