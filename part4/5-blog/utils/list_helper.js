@@ -8,11 +8,20 @@ const totalLikes = (blogs) => {
 
 }
 
+const getMostPopularBlog = (blogs) => {
+    if(blogs.length === 0){
+        return {};
+    } else{
+        return blogs.reduce((currentBlog, prevBlog) => currentBlog.likes > prevBlog.likes ? currentBlog : prevBlog)
+    }
+}
+
 const dummy = (blogs) => {
     return 1
 }
 
 module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    getMostPopularBlog
 }

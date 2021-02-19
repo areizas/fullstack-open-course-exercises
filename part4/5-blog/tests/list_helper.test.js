@@ -9,14 +9,34 @@ test('dummy returns one', ()=>{
 describe('Total likes',()=>{
 
     test('Returns blog likes number when only one blog is in the list', ()=>{
-        expect(listHelper.totalLikes(listHelperDataSet.listWithOneBlog)).toBe(listHelperDataSet.listWithOneBlog[0].likes)
+        expect(listHelper.totalLikes(listHelperDataSet.listWithOneBlog))
+            .toBe(listHelperDataSet.countLikesResults.listWithOneBlog)
     })
 
     test('Returns the sum of likes for all blogs in the list', ()=>{
-        expect(listHelper.totalLikes(listHelperDataSet.listWithMultipleBlogs)).toBe(6)
+        expect(listHelper.totalLikes(listHelperDataSet.listWithMultipleBlogs))
+            .toBe(listHelperDataSet.countLikesResults.listWithMultipleBlogs)
     })
 
     test('Returns zero for empty list',()=>{
-        expect(listHelper.totalLikes(listHelperDataSet.emptyList)).toBe(0)
+        expect(listHelper.totalLikes(listHelperDataSet.emptyList))
+            .toBe(listHelperDataSet.countLikesResults.emptyList)
+    })
+})
+
+describe('Get the most popular blog', ()=>{
+    test('Returns the single blog when there is only one single blog in the list', ()=>{
+        expect(listHelper.getMostPopularBlog(listHelperDataSet.listWithOneBlog))
+            .toEqual(listHelperDataSet.mostPopularBlogResults.listWithOneBlog)
+    })
+
+    test('Returns the blog with higher amount of likes when there are multiple blogs on the list', ()=>{
+        expect(listHelper.getMostPopularBlog(listHelperDataSet.listWithMultipleBlogs))
+            .toEqual(listHelperDataSet.mostPopularBlogResults.listWithMultipleBlogs)
+    })
+
+    test('Returns a void object when a empty list is provide', ()=>{
+        expect(listHelper.getMostPopularBlog(listHelperDataSet.emptyList))
+            .toEqual(listHelperDataSet.mostPopularBlogResults.emptyList)
     })
 })
