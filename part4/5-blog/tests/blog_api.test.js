@@ -23,3 +23,12 @@ test('All blogs are returned correctly', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(blogApiDataSet.initialBlogs.length)
 })
+
+test('Check that the unique blog identifier is named id', async () => {
+    let blogs = await blogApiHelper.getBlogsInDb()
+    blogs = JSON.parse(JSON.stringify(blogs))
+
+    for( let blog of blogs ){
+        expect(blog.id).toBeDefined()
+    }
+})

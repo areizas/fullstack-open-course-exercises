@@ -37,6 +37,12 @@ const setInitialData = async (initialBlogs) => {
     }
 }
 
+const getBlogsInDb = async () => {
+    const blogs = await Blog.find({})
+    return blogs.map( blog => blog.toJSON())
+}
+
 module.exports = {
-    connect, closeDatabase, clearDatabase, setInitialData
+    connect, closeDatabase, clearDatabase, setInitialData,
+    getBlogsInDb
 }
