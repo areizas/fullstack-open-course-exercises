@@ -1,5 +1,5 @@
 const listHelper = require('../utils/list_helper')
-const listHelperDataSet = require('./data_sets/list_helper.data.json')
+const listHelperDataSet = require('./data_sets/list_helper.data.js')
 
 test('dummy returns one', ()=>{
     const blog = []

@@ -7,7 +7,9 @@ const blogRouter = require('./controllers/blogs')
 const morgan = require('morgan')
 const middleware = require('./utils/middleware')
 
-mongoose.connect(config.MONGOOSE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+if(process.env.NODE_ENV !== 'test'){
+    mongoose.connect(config.MONGOOSE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+}
 
 app.use(cors())
 app.use(express.json())
