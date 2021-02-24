@@ -52,3 +52,19 @@ test('A new blog is created correctly', async () => {
 
     expect(newBlogList).toHaveLength(blogApiDataSet.initialBlogs.length + 1)
 })
+
+test('Check that the default value for likes parameter will be set to 0 if this parameter is not send in the request', async () => {
+    const newBlog = {
+        title: 'new title',
+        author: 'new author',
+        url: 'http://new-url.com'
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+
+    const newBlogList = await blogApiHelper.getBlogsInDb()
+
+    expect(newBlogList.pop().likes).toBe(0)
+})
