@@ -20,14 +20,10 @@ blogRouter.get('/:id',(request,response,next) => {
         .catch( error => next(error) )
 })
 
-blogRouter.post('/',(request,response,next) => {
+blogRouter.post('/',async (request,response,next) => {
     const blog = new Blog(request.body)
-
-    blog.save()
-        .then( newBlog => {
-            response.status(201).json(newBlog)
-        })
-        .catch( error => next(error) )
+    const newBlog = await blog.save()
+    response.status(201).json(newBlog)
 })
 
 blogRouter.put('/:id',(request,response,next) => {
