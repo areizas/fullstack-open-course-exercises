@@ -80,3 +80,15 @@ test('A blog is not created when a tittle is not provided', async () => {
         .send(newBlog)
         .expect(400)
 })
+
+test('A blog is deleted correctly', async () => {
+
+    const blogList = await blogApiHelper.getBlogsInDb()
+
+    await api
+        .delete(`/api/blogs/${blogList[0].id}`)
+        .expect(204)
+
+    const newBlogList = await blogApiHelper.getBlogsInDb()
+    expect(newBlogList).toHaveLength(blogApiDataSet.initialBlogs.length - 1)
+})
