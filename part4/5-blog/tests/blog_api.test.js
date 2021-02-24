@@ -92,3 +92,18 @@ test('A blog is deleted correctly', async () => {
     const newBlogList = await blogApiHelper.getBlogsInDb()
     expect(newBlogList).toHaveLength(blogApiDataSet.initialBlogs.length - 1)
 })
+
+test('Blog is updated correctly', async () => {
+
+    const blogList = await blogApiHelper.getBlogsInDb()
+    const newBlog = { ...blogList[0],  likes: 5 }
+
+    await api
+        .put(`/api/blogs/${blogList[0].id}`)
+        .send(newBlog)
+        .expect(200)
+
+    const newBlogList = await blogApiHelper.getBlogsInDb()
+
+    expect(newBlogList[0].likes).toBe(newBlog.likes)
+})
