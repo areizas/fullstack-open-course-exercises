@@ -3,6 +3,7 @@ const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const Note = require('../models/note')
+const User = require('../models/user')
 const api = supertest(app)
 
 beforeEach(async () =>{
@@ -79,8 +80,8 @@ describe('viewing a specific note', () => {
     })
 })
 
-describe('addition of a new note', () => {
-    test('a valid note can be added', async ()=>{
+describe('When user is not authenticated addition of a new note', () => {
+    test('failed when a valid note is sent without token', async ()=>{
         const newNote = {
             content: 'async/await simplifies making async calls',
             important: true
@@ -89,6 +90,47 @@ describe('addition of a new note', () => {
         await api
             .post('/api/notes')
             .send(newNote)
+            .expect(401)
+
+        const notesAtEnd = await helper.notesInDb()
+        expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
+    })
+
+    test('failed when an invalid note is sent without token', async ()=>{
+        const newNote = {
+            important: true
+        }
+
+        await api
+            .post('/api/notes')
+            .send(newNote)
+            .expect(401)
+
+        const notesAtEnd = await helper.notesInDb()
+        expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
+    })
+})
+
+describe('When user is authenticated addition of a new note', () => {
+
+    beforeEach(async () =>{
+        await User.deleteMany({})
+        await api.post('/api/users').send(helper.fakeUser).expect(200)
+    })
+
+    test('a valid note can be added', async ()=>{
+        const newNote = {
+            content: 'async/await simplifies making async calls',
+            important: true
+        }
+
+        const tokenResponse = await api.post('/api/login')
+                                        .send(helper.fakeUser).expect(200)
+        const token = tokenResponse.body.token
+        await api
+            .post('/api/notes')
+            .send(newNote)
+            .set({ Authorization: `Bearer ${token}` })
             .expect(200)
             .expect('Content-Type', /application\/json/)
 
@@ -99,14 +141,21 @@ describe('addition of a new note', () => {
         expect(contents).toContain('async/await simplifies making async calls')
     })
 
-    test('note without content is not added', async ()=>{
+    test('note without an authenticated user is not added', async ()=>{
         const newNote = {
             important: true
         }
 
+        const tokenResponse = await api
+            .post('/api/login')
+            .send(helper.fakeUser)
+
+        const token = tokenResponse.body.token
+
         await api
             .post('/api/notes')
             .send(newNote)
+            .set({ Authorization: `Bearer ${token}` })
             .expect(400)
 
         const notesAtEnd = await helper.notesInDb()

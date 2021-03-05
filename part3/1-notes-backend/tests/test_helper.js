@@ -14,6 +14,12 @@ const initialNotes = [
     }
 ]
 
+const fakeUser = {
+    username: 'root',
+    name: 'root',
+    password: 'toor'
+}
+
 const nonExistingId = async () => {
     const note = new Note({ content: 'willremovethissoon', date: new Date() })
     await note.save()
@@ -33,5 +39,6 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-    initialNotes, nonExistingId, notesInDb, usersInDb
+    initialNotes, nonExistingId, notesInDb, usersInDb,
+    fakeUser
 }
