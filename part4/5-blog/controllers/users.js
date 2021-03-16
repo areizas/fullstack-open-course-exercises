@@ -10,8 +10,8 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
     const body = request.body
 
-    if (!body.password){
-        response.status(400).json({error: 'missing password'})
+    if (!body.password || body.password.length < 3){
+        response.status(400).json({error: 'missing or wrong password'})
     }
 
     const passwordHash = await bcrypt.hash(body.password, 10)
@@ -23,7 +23,7 @@ usersRouter.post('/', async (request, response) => {
     })
 
     await newUser.save()
-    response.json(newUser)
+    response.status(201).json(newUser)
 
 })
 

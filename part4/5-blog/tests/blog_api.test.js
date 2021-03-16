@@ -1,16 +1,12 @@
 const blogApiHelper = require('./test_helper/blog_api.helper')
 const blogApiDataSet = require('./data_sets/blog_api.data')
-const Blog = require('../models/blog')
 const app = require('../app')
 const supertest = require('supertest')
 const api = supertest(app)
 
 beforeAll(async () => await blogApiHelper.connect() )
-
 beforeEach( async () => await blogApiHelper.setInitialData(blogApiDataSet.initialBlogs))
-
 afterEach(async () => await blogApiHelper.clearDatabase())
-
 afterAll(async () => await blogApiHelper.closeDatabase())
 
 test('Blogs are returned correctly with json format', async () => {
