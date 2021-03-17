@@ -12,6 +12,7 @@ usersRouter.post('/', async (request, response) => {
 
     if (!body.password || body.password.length < 3){
         response.status(400).json({error: 'missing or wrong password'})
+        return
     }
 
     const passwordHash = await bcrypt.hash(body.password, 10)

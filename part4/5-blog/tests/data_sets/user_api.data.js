@@ -17,6 +17,29 @@ const newCorrectUser = {
         password: 'password3'
     }
 
+const newUserWiithOutPassword = {
+    username: 'username3',
+    name: 'name3'
+}
+
+const newUserWiithOutUsername = {
+    name: 'name3',
+    password: 'password3'
+}
+
+const newUserWithShortPassword = {
+    username: 'username3',
+    name: 'name3',
+    password: 'pa'
+}
+
+const newUserWithShortUsername = {
+    username: 'us',
+    name: 'name3',
+    password: 'password3'
+}
+
 module.exports = {
-    initialUsers, newCorrectUser
+    initialUsers, newCorrectUser,
+    newUserWiithOutPassword, newUserWiithOutUsername, newUserWithShortPassword, newUserWithShortUsername
 }
