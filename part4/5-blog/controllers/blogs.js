@@ -2,6 +2,18 @@ const blogRouter = require('express').Router()
 require('express-async-errors')
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const config = require('../utils/config')
+
+const getToken = (request) => {
+    const authorization = request.get('authorization')
+
+    if(authorization && authorization.toString().toLowerCase().startsWith('bearer ')){
+        return authorization.toString().substring(7)
+    }
+
+    return null
+}
 
 blogRouter.get('/',async (request,response,next) => {
     const blogs = await Blog.find({}).populate('user',{username:1, name:1})
@@ -23,8 +35,14 @@ blogRouter.get('/:id',(request,response,next) => {
 
 blogRouter.post('/',async (request,response,next) => {
     const body = request.body
+    const token = getToken(request)
+    const decodedToken = jwt.verify(token,config.SECRET)
 
-    const user = await User.findById(body.userId)
+    if (!token || !decodedToken.id){
+        return response.status(401).json({error: 'Invalid or malformed token'})
+    }
+
+    const user = await User.findById(decodedToken.id)
 
     const newBlog = { ...body,
         user: user._id
