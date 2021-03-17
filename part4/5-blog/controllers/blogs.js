@@ -35,10 +35,9 @@ blogRouter.get('/:id',(request,response,next) => {
 
 blogRouter.post('/',async (request,response,next) => {
     const body = request.body
-    const token = getToken(request)
-    const decodedToken = jwt.verify(token,config.SECRET)
+    const decodedToken = jwt.verify(request.token,config.SECRET)
 
-    if (!token || !decodedToken.id){
+    if (!request.token || !decodedToken.id){
         return response.status(401).json({error: 'Invalid or malformed token'})
     }
 
