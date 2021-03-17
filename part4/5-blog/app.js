@@ -16,7 +16,8 @@ if(process.env.NODE_ENV !== 'test'){
 app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(middleware.getToken)
+app.use(middleware.tokenExtractor)
+app.use(middleware.userExtractor)
 
 app.use('/api/blogs',blogRouter)
 app.use('/api/users',usersRouter)

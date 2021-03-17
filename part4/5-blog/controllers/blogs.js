@@ -35,13 +35,7 @@ blogRouter.get('/:id',(request,response,next) => {
 
 blogRouter.post('/',async (request,response,next) => {
     const body = request.body
-    const decodedToken = jwt.verify(request.token,config.SECRET)
-
-    if (!request.token || !decodedToken.id){
-        return response.status(401).json({error: 'Invalid or malformed token'})
-    }
-
-    const user = await User.findById(decodedToken.id)
+    const user = request.user
 
     const newBlog = { ...body,
         user: user._id
@@ -63,14 +57,7 @@ blogRouter.put('/:id',async (request,response,next) => {
 })
 
 blogRouter.delete('/:id',async (request,response,next) => {
-    const body = request.body
-    const decodedToken = jwt.verify(request.token, config.SECRET)
-
-    if(!request.token || !decodedToken){
-        return response.status(401).json({error: 'Invalid token'})
-    }
-
-    const user = await User.findById(decodedToken.id)
+    const user = request.user
     const blog = await Blog.findById(request.params.id)
 
     if(blog.user.toString() !== user._id.toString()){
