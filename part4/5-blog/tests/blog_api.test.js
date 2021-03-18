@@ -1,23 +1,40 @@
 const blogApiHelper = require('./test_helper/blog_api.helper')
 const blogApiDataSet = require('./data_sets/blog_api.data')
+const userData = require('./data_sets/user_api.data')
+const userHelper = require('./test_helper/user_api.helper')
 const app = require('../app')
 const supertest = require('supertest')
 const api = supertest(app)
 
-beforeAll(async () => await blogApiHelper.connect() )
-beforeEach( async () => await blogApiHelper.setInitialData(blogApiDataSet.initialBlogs))
+let token
+let userId
+
+beforeAll(async () => {
+    await blogApiHelper.connect()
+    await userHelper.setInitialUsers(userData.initialUsers)
+    const response = await api
+        .post('/api/login')
+        .send(userData.initialUsers[0])
+    token = response.body.token
+    userId = response.body.id
+} )
+beforeEach( async () => await blogApiHelper.setInitialData(blogApiDataSet.initialBlogs, userId))
 afterEach(async () => await blogApiHelper.clearDatabase())
-afterAll(async () => await blogApiHelper.closeDatabase())
+afterAll(async () => {
+    await userHelper.clearDatabase()
+    await blogApiHelper.closeDatabase()
+})
 
 test('Blogs are returned correctly with json format', async () => {
     await api
         .get('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 })
 
 test('All blogs are returned correctly', async () => {
-    const response = await api.get('/api/blogs')
+    const response = await api.get('/api/blogs').set('Authorization', `Bearer ${token}`)
     expect(response.body).toHaveLength(blogApiDataSet.initialBlogs.length)
 })
 
@@ -40,6 +57,7 @@ test('A new blog is created correctly', async () => {
 
     const response = await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type',/application\/json/)
@@ -58,6 +76,7 @@ test('Check that the default value for likes parameter will be set to 0 when thi
 
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
 
     const newBlogList = await blogApiHelper.getBlogsInDb()
@@ -73,6 +92,7 @@ test('A blog is not created when a tittle is not provided', async () => {
 
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(400)
 })
@@ -83,6 +103,7 @@ test('A blog is deleted correctly', async () => {
 
     await api
         .delete(`/api/blogs/${blogList[0].id}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
 
     const newBlogList = await blogApiHelper.getBlogsInDb()
@@ -96,6 +117,7 @@ test('Blog is updated correctly', async () => {
 
     await api
         .put(`/api/blogs/${blogList[0].id}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(200)
 

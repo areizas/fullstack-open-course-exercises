@@ -25,7 +25,7 @@ const clearDatabase = async () => {
     }
 }
 
-const setInitialUsers = async (initialUsers) => {
+const setInitialUsers = async (initialUsers, ) => {
     for(let user of initialUsers){
         const passwordHash = await bcrypt.hash(user.password,10)
         const newUser = new User({username: user.username, name: user.name, passwordHash})

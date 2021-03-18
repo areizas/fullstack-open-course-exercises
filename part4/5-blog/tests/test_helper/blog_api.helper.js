@@ -24,15 +24,12 @@ const closeDatabase = async () => {
 const clearDatabase = async () => {
     const collections = mongoose.connection.collections
 
-    for (let key in collections){
-        const collection = collections[key]
-        await collection.deleteMany({})
-    }
+    await collections.blogs.deleteMany({})
 }
 
-const setInitialData = async (initialBlogs) => {
+const setInitialData = async (initialBlogs, userId) => {
     for (let blog of initialBlogs){
-        const newBlog = new Blog(blog)
+        const newBlog = new Blog({...blog, user: userId})
         await newBlog.save()
     }
 }
