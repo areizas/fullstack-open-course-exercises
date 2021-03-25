@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import Note from "./components/Note";
 import noteService from './services/notes'
 import Notification from "./components/Notification";
-import loginService from './services/login'
 import Login from "./components/Login";
+import NoteForm from "./components/NoteForm";
 
 const Footer = () => {
     const footerStyle = {
@@ -21,7 +21,6 @@ const Footer = () => {
 
 const App = () => {
     const [notes, setNotes] = useState([])
-    const [newNote, setNewNote] = useState('a new note...')
     const [showAll, setShowAll] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
     const [user, setUser] = useState(null)
@@ -33,25 +32,6 @@ const App = () => {
                 setNotes(initialNotes)
             })
     }, [])
-
-    const addNote = (event) => {
-        event.preventDefault()
-        const noteObject = {
-            content: newNote,
-            date: new Date().toISOString(),
-            important: Math.random()<0.5
-        }
-        noteService
-            .create(noteObject)
-            .then(returnedNote => {
-                setNotes(notes.concat(returnedNote))
-                setNewNote('')
-            })
-    }
-
-    const handleOnChange = (event) => {
-        setNewNote(event.target.value)
-    }
 
     const toggleImportanceOf = (id) => {
         const note = notes.find( note => note.id === id)
@@ -73,16 +53,6 @@ const App = () => {
 
     const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
-    const noteForm = () => (
-        <form onSubmit={addNote}>
-            <input
-                value={newNote}
-                onChange={handleOnChange}
-            />
-            <button type="submit">save</button>
-        </form>
-    )
-
     return (
         <div>
             <h1>Notes</h1>
@@ -92,7 +62,7 @@ const App = () => {
                 <Login setUser={setUser} setErrorMessage={setErrorMessage}/> :
                 <div>
                     <p>{user.name} logged-in</p>
-                    {noteForm()}
+                    <NoteForm notes={notes} setNotes={setNotes}/>
                 </div>
             }
 
