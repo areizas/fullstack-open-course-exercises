@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import Note from "./components/Note";
 import noteService from './services/notes'
 import Notification from "./components/Notification";
+import loginService from './services/login'
+import Login from "./components/Login";
 
 const Footer = () => {
     const footerStyle = {
@@ -22,6 +24,7 @@ const App = () => {
     const [newNote, setNewNote] = useState('a new note...')
     const [showAll, setShowAll] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [user, setUser] = useState(null)
 
     useEffect(()=>{
         noteService
@@ -70,10 +73,31 @@ const App = () => {
 
     const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
+    const noteForm = () => (
+        <form onSubmit={addNote}>
+            <input
+                value={newNote}
+                onChange={handleOnChange}
+            />
+            <button type="submit">save</button>
+        </form>
+    )
+
     return (
         <div>
             <h1>Notes</h1>
             <Notification message={errorMessage}/>
+
+            { user === null ?
+                <Login setUser={setUser} setErrorMessage={setErrorMessage}/> :
+                <div>
+                    <p>{user.name} logged-in</p>
+                    {noteForm()}
+                </div>
+            }
+
+            <h2>Notes</h2>
+
             <button onClick={()=>setShowAll(!showAll)}>
                 show {showAll ? 'important' : 'all'}
             </button>
@@ -82,13 +106,7 @@ const App = () => {
                     <Note key={note.id} note={note} toggleImportance={()=>toggleImportanceOf(note.id)}/>
                 )}
             </ul>
-            <form onSubmit={addNote}>
-                <input
-                    value={newNote}
-                    onChange={handleOnChange}
-                />
-                <button type="submit">save</button>
-            </form>
+
             <Footer/>
         </div>
     )
