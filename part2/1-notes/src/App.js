@@ -4,6 +4,7 @@ import noteService from './services/notes'
 import Notification from "./components/Notification";
 import Login from "./components/Login";
 import NoteForm from "./components/NoteForm";
+import Logout from "./components/Logout";
 
 const Footer = () => {
     const footerStyle = {
@@ -31,6 +32,15 @@ const App = () => {
             .then( initialNotes => {
                 setNotes(initialNotes)
             })
+    }, [])
+
+    useEffect(()=>{
+        const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+         if (loggedUserJSON){
+             const user = JSON.parse(loggedUserJSON)
+             setUser(user)
+             noteService.setToken(user.token)
+         }
     }, [])
 
     const toggleImportanceOf = (id) => {
@@ -62,6 +72,7 @@ const App = () => {
                 <Login setUser={setUser} setErrorMessage={setErrorMessage}/> :
                 <div>
                     <p>{user.name} logged-in</p>
+                    <Logout setUser={setUser}/>
                     <NoteForm notes={notes} setNotes={setNotes}/>
                 </div>
             }

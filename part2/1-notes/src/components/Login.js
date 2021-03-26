@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import loginService from "../services/login";
+import noteService from "../services/notes"
 
 const Login = ({setUser, setErrorMessage}) => {
 
@@ -10,6 +11,12 @@ const Login = ({setUser, setErrorMessage}) => {
         event.preventDefault()
         try {
             const user = await loginService.login({username, password})
+
+            window.localStorage.setItem(
+                'loggedNoteappUser', JSON.stringify(user)
+            )
+
+            noteService.setToken(user.token)
             setUser(user)
             setUsername('')
             setPassword('')
